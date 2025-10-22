@@ -362,6 +362,7 @@ else:
         col = st.columns((2, 2, 2, 2, 2, 2, 2, 2, 2), gap='small')
         with col[0]:
             st.markdown('Assets')
+            st.markdown('---')
             st.markdown('Cash & Equivalents')
         
         with col[1]:
