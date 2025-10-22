@@ -331,8 +331,8 @@ else:
     col = st.columns((1.5, 6.5), gap='medium')
     with col[0]:          
         if (selected_report_type == '2 Year Summary'):
-            st.markdown('# Assets')
-            
+            st.markdown('##### Assets')
+
         st.markdown('---')
 
     with col[1]:
