@@ -362,6 +362,7 @@ else:
         col = st.columns((2, 2, 2, 2, 2, 2, 2, 2, 2), gap='small')
         with col[0]:
             st.markdown('Assets')
+            st.markdown('Cash & Equivalents')
         
         with col[1]:
             st.markdown("""<div style="text-align: right;">YYYY-1</div>""", unsafe_allow_html=True)
