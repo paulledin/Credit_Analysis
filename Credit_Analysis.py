@@ -1,0 +1,502 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Aug 26 14:34:26 2024
+
+@author: PLedin
+"""
+
+import streamlit as st
+import pandas as pd
+import numpy as np
+import altair as alt
+
+#from st_oauth import st_oauth
+
+st.set_page_config(
+    page_title="America's Credit Unions",
+    layout="wide",
+    initial_sidebar_state="expanded")
+
+thePassPhrase = st.secrets["thePassPhrase"]
+#dbConn = st.connection("snowflake")
+
+###############################################################################
+#Function Definitions
+###############################################################################
+def convertDateToDisplay(date):
+    switcher = {
+        "01": "January",
+        "02": "February",
+        "03": "March",
+        "04": "April",
+        "05": "May",
+        "06": "June",
+        "07": "July",
+        "08": "August",
+        "09": "September",
+        "10": "October",
+        "11": "November",
+        "12": "December",
+    }
+    
+    return switcher.get(date[4:], "**Bad Month**") + "-" + date[:4]
+
+def convertDateToSystem(date):
+    switcher = {
+        "January":  "01",
+        "February": "02",
+        "March":    "03",
+        "April":    "04",
+        "May":      "05",
+        "June":     "06",
+        "July":     "07",
+        "August":   "08",
+        "September":"09",
+        "October":  "10",
+        "November": "11",
+        "December": "12",
+    }
+    
+    return date[len(date)-4:len(date)] + switcher.get(date[:len(date)-5], "**Bad Month**")
+
+def get_report_periods():
+    periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')
+    
+    retVal = list()
+    index = 0
+    for x in periods:
+        retVal.insert(index, periods[x])
+        index += 1
+    
+    return (retVal)
+
+def getMergersTable(month):
+    df_mergers_table = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/merged_cus_' + convertDateToSystem(month) + '.csv', dtype={
+                                                'NIMBLE_CUNA_ID': 'string',
+                                                'NAME': 'string',
+                                                'State': 'string',
+                                                'Assets': 'int64',
+                                                'Members': 'int64',
+                                                'Employees': 'int64',
+                                                'SURVIVOR_ID': 'string',
+                                                'STATUS_CHG_DATE': 'string'
+                                                }))
+    df_mergers_table.rename(columns={'SURVIVOR_ID' : 'Survivor NIMBLE_CUNA_ID', 'STATUS_CHG_DATE' : 'Status Change Date'}, inplace=True)
+    
+    return (df_mergers_table)
+
+def getPendingTable(month):
+    return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/pending_cus_' + convertDateToSystem(month) + '.csv', dtype={
+                                    'NIMBLE_CUNA_ID': 'string',
+                                    'NAME': 'string',
+                                    'State': 'string',
+                                    'Assets': 'int64',
+                                    'Members': 'int64',
+                                    'Employees': 'int64'
+                                    }))
+
+def getLiquidationsTable(month):
+    return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/liquidated_cus_' + convertDateToSystem(month) + '.csv', dtype={
+                                    'NIMBLE_CUNA_ID': 'string',
+                                    'NAME': 'string',
+                                    'State': 'string',
+                                    'Assets': 'int64',
+                                    'Members': 'int64',
+                                    'Employees': 'int64'
+                                    }))
+
+def getNameChgsTable(month):
+    return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/name_chgs_' + convertDateToSystem(month) + '.csv', dtype={
+                                    'NIMBLE_CUNA_ID': 'string',
+                                    'Old Name': 'string',
+                                    'State': 'string',
+                                    'New Name': 'string'
+                                    }))
+
+def getCEOChgsTable(month):
+    return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/ceo_chgs_' + convertDateToSystem(month) + '.csv', dtype={
+                                    'NIMBLE_CUNA_ID': 'string',
+                                    'Name': 'string',
+                                    'State': 'string',
+                                    'Old Manager': 'string',
+                                    'New Manager': 'string'
+                                    }))
+
+def getAddressChgsTable(month, addressType):
+    if (addressType == 'mailing'):
+        df_address_chgs = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/mailing_address_chgs_' + convertDateToSystem(month) + '.csv', dtype={
+                                                   'NIMBLE_CUNA_ID': 'string',
+                                                   'Name': 'string',
+                                                   'Old Mailing Address': 'string',
+                                                   'New Mailing Address': 'string'
+                                                   }))
+    else:
+        df_address_chgs = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/street_address_chgs_' + convertDateToSystem(month) + '.csv', dtype={
+                                                   'NIMBLE_CUNA_ID': 'string',
+                                                   'Name': 'string',
+                                                   'Old Street Address': 'string',
+                                                   'New Street Address': 'string'
+                                                   }))
+    return df_address_chgs
+
+def getAFLChgsTables(month, aflChgType, aflType):
+    if (aflChgType == 'REAFL'):
+        df_afl_chgs = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/reafl_chgs_' + aflType + '_' + convertDateToSystem(month) + '.csv', dtype={
+                                               'NIMBLE_CUNA_ID': 'string',
+                                               'Name': 'string',
+                                               'State': 'string',
+                                               'Assets': 'int64',
+                                               'Members': 'int64',
+                                               'Employees': 'int64'
+                                               }))
+    elif (aflChgType == 'DISAFL'):
+        df_afl_chgs = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/disafl_chgs_' + aflType + '_' + convertDateToSystem(month) + '.csv', dtype={
+                                               'NIMBLE_CUNA_ID': 'string',
+                                               'Name': 'string',
+                                               'State': 'string',
+                                               'Assets': 'int64',
+                                               'Members': 'int64',
+                                               'Employees': 'int64'
+                                               }))
+    return df_afl_chgs
+
+def getCharterChgsTable(month):
+    return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/charter_chgs_' + convertDateToSystem(month) + '.csv', dtype={
+                                    'NIMBLE_CUNA_ID': 'string',
+                                    'Name': 'string',
+                                    'Old Charter': 'string',
+                                    'Old Charter Type': 'string',
+                                    'New Charter': 'string',
+                                    'New Charter Type': 'string',
+                                    }))
+
+def getNewCUsTable(month):
+    return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/new_cus_' + convertDateToSystem(month) + '.csv', dtype={
+                                    'NIMBLE_CUNA_ID': 'string',
+                                    'Name': 'string',
+                                    'Address': 'string',
+                                    'City': 'string',
+                                    'State': 'string',
+                                    'Zip Code': 'string'
+                                    }))
+
+def getAFLTable(month, aflType):
+    if (aflType == 'cuna'):
+        df_afl_table = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_1_ByState_Legacycuna_' + convertDateToSystem(month) + '.csv'))
+    elif (aflType == 'nafcu'):
+        df_afl_table = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_1_ByState_Legacynafcu_' + convertDateToSystem(month) + '.csv'))
+    else:
+        df_afl_table = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_1_ByState_Either_' + convertDateToSystem(month) + '.csv'))
+        
+    return df_afl_table
+
+def getPreviousSystemMonth(month):
+    system_month = int(convertDateToSystem(month)[4:])
+    prev_system_year = convertDateToSystem(month)[:4]
+    
+    prev_system_month = system_month - 1
+    if(prev_system_month == 0):
+        prev_system_month = 12
+        prev_system_year = str(int(prev_system_year) - 1)
+           
+    return (prev_system_year + str(prev_system_month).rjust(2, '0'))
+
+def get_report_periods_for_display():
+    periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')    
+    retVal = list()
+
+    index = 0
+    for x in periods:
+        retVal.insert(index, periods[x])
+        index += 1
+        
+    df_retVal = pd.DataFrame(retVal[0])
+        
+    for i in range(len(df_retVal)):
+        period = df_retVal.loc[i, "period"]
+        df_retVal.loc[df_retVal['period'] == period, 'report_periods_formatted'] = convertDateToDisplay(str(period))
+
+    return df_retVal
+    
+def format_number(amount):
+    return '{:,.0f}'.format(amount)
+
+def get_report_periods_for_display_from_db():
+    periods = get_report_periods_from_db()
+    periods['report_periods_formatted'] = periods.apply(lambda row: convertDateToDisplay(str(row.PERIOD)), axis=1)                                                             
+    
+    return (periods)
+
+@st.cache_data
+def get_report_periods_from_db():
+    return (dbConn.session().sql("SELECT DISTINCT(SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, length(TABLE_NAME))) AS period FROM monthly_report.information_schema.tables WHERE table_schema!='INFORMATION_SCHEMA' ORDER BY SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, LENGTH(TABLE_NAME)) DESC").to_pandas())
+
+@st.cache_data
+def getAFLTable_from_db(month, afl_type):
+    sqlStmt = "SELECT * FROM monthly_report."
+    
+    if(afl_type == 'Legacy CUNA'):
+        aflType = 'Legacycuna'
+    elif(afl_type == 'Legacy NAFCU'):
+        aflType = 'Legacynafcu'
+    elif(afl_type == 'Member of Both'):
+        aflType = 'Both'
+    else:
+        aflType = 'Either'
+    sqlStmt += aflType + '.afl_table_1_ByState' + '_' + convertDateToSystem(month)
+    
+    return (dbConn.session().sql(sqlStmt).to_pandas())
+
+@st.cache_data
+def getChangeTableFromDB(month, table_name):
+    sqlStmt = "SELECT * FROM monthly_report.change_reports."
+    
+    if(table_name == 'mergers'):
+        sqlStmt += 'merged_cus' + '_' + convertDateToSystem(month)
+    elif(table_name == 'pending'):
+        sqlStmt += 'pending_cus' + '_' + convertDateToSystem(month)
+    elif(table_name == 'liquidations'):
+        sqlStmt += 'liquidated_cus' + '_' + convertDateToSystem(month)
+    elif(table_name == 'name_chgs'):
+        sqlStmt += 'name_chgs' + '_' + convertDateToSystem(month)
+    elif(table_name == 'mailing_address_chgs'):
+        sqlStmt += 'mailing_address_chgs' + '_' + convertDateToSystem(month)
+    elif(table_name == 'street_address_chgs'):
+        sqlStmt += 'street_address_chgs' + '_' + convertDateToSystem(month)
+    elif(table_name == 'ceo_chgs'):
+        sqlStmt += 'ceo_chgs' + '_' + convertDateToSystem(month)
+    elif(table_name == 'charter_chgs'):
+        sqlStmt += 'charter_chgs' + '_' + convertDateToSystem(month)
+    elif(table_name == 'new_cus'):
+        sqlStmt += 'new_cus' + '_' + convertDateToSystem(month)
+
+    return (dbConn.session().sql(sqlStmt).to_pandas())
+
+@st.cache_data
+def getAFLChgsTableFromDB(month, chg_type, afl_type):
+    sqlStmt = "SELECT * FROM monthly_report.change_reports."
+    
+    if(chg_type == 'REAFL'):
+        sqlStmt += "reafl_chgs_" + afl_type + "_" + convertDateToSystem(month) 
+    elif(chg_type == 'DISAFL'):
+        sqlStmt += "disafl_chgs_" + afl_type + "_" + convertDateToSystem(month) 
+
+    return (dbConn.session().sql(sqlStmt).to_pandas())
+###############################################################################
+#Start building Streamlit App
+###############################################################################
+#report_periods = get_report_periods_for_display_from_db()
+report_periods = get_report_periods_for_display()
+
+with st.sidebar:
+    st.markdown('![alt text](https://raw.githubusercontent.com/paulledin/data/master/ACUS.jpg)')
+    passphrase = st.text_input("### Please enter the passphrase:")
+
+if (passphrase != thePassPhrase):
+    if len(passphrase) > 0:
+        st.markdown('# Passphrase not correct....')
+        st.markdown('### Please try again or contact: pledin@americascreditunions.org for assistance.')
+else:  
+    column_configuration = {
+        "Assets": st.column_config.NumberColumn(
+        "Assets ($)",
+        help="Total Assets",
+        min_value=0,
+        max_value=1000000000000,
+        step=1,
+        format="localized",),
+        "Members": st.column_config.NumberColumn(
+        "Members",
+        help="Number of Memberships",
+        min_value=0,
+        max_value=1000000000000,
+        step=1,
+        format="localized",),
+        "Employees": st.column_config.NumberColumn(
+        "Employees",
+        help="Number of Total Employees",
+        min_value=0,
+        max_value=1000000000000,
+        step=1,
+        format="localized",)
+        }
+     
+    with st.sidebar:
+        st.title('Monthly Change Reports')
+    
+        report_type = ['Status','Affiliation', 'Name', 'Address', 'Miscellaneous', 'New']
+        selected_report_type = st.selectbox('Report Type', report_type)
+    
+        month = report_periods['report_periods_formatted']
+        selected_month = st.selectbox('Month', month)
+
+    #df_afl_table_cuna = getAFLTable_from_db(selected_month, 'cuna')
+    #df_afl_table_nafcu = getAFLTable_from_db(selected_month, 'nafcu')
+    #df_afl_table_either = getAFLTable_from_db(selected_month, 'either')
+    df_afl_table_cuna = getAFLTable(selected_month, 'cuna')
+    df_afl_table_nafcu = getAFLTable(selected_month, 'nafcu')
+    df_afl_table_either = getAFLTable(selected_month, 'either')
+    
+
+    #df_mergers = getChangeTableFromDB(selected_month, 'mergers')
+    #df_pending = getChangeTableFromDB(selected_month, 'pending')
+    #df_liquidated = getChangeTableFromDB(selected_month, 'liquidations')
+    #df_name_chgs = getChangeTableFromDB(selected_month, 'name_chgs')
+    #df_mailing_address_chgs = getChangeTableFromDB(selected_month, 'mailing_address_chgs')
+    #df_street_address_chgs = getChangeTableFromDB(selected_month, 'street_address_chgs')
+    #df_ceo_chgs = getChangeTableFromDB(selected_month, 'ceo_chgs')
+    #df_charter_chgs = getChangeTableFromDB(selected_month, 'charter_chgs')
+    #df_new_cus = getChangeTableFromDB(selected_month, 'new_cus')
+
+    df_mergers = getMergersTable(selected_month)
+    df_pending = getPendingTable(selected_month)
+    df_liquidated = getLiquidationsTable(selected_month)
+    df_name_chgs = getNameChgsTable(selected_month)
+    df_mailing_address_chgs = getAddressChgsTable(selected_month, 'mailing')
+    df_street_address_chgs = getAddressChgsTable(selected_month, 'street')
+    df_ceo_chgs = getCEOChgsTable(selected_month)
+    df_charter_chgs = getCharterChgsTable(selected_month)
+    df_new_cus = getNewCUsTable(selected_month)
+
+    col = st.columns((1.5, 6.5), gap='medium')
+    with col[0]:          
+        st.markdown('### Summary')
+        st.markdown('---')
+        st.markdown('**Month Ended :: ' + selected_month + '**')
+        st.markdown('*Active Credit Unions:* ' + '**' + str(format_number(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 5])) + '**')
+        st.markdown('*Affiliated with America\'s CUs:* ' + '**' + str(format_number(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 1])) + '**')
+        st.markdown('---')
+    
+        st.markdown('**Affiliation Ratios**')
+        st.markdown('*Credit Unions:* ' + '**' + str(round(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 10] * 100, 2))  + '%**')
+        st.markdown('*Members:* ' + '**' + str(round(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 11] * 100, 2))  + '%**')
+        st.markdown('*Assets:* ' + '**' + str(round(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 12] * 100, 2))  + '%**')
+        st.markdown('---')
+    
+        st.markdown('**Monthly Totals**')
+        st.markdown('*New Credit Unions:* ' + '**' + str(len(df_new_cus)) + '**')
+        st.markdown('*Name Changes:* ' + '**' + str(len(df_name_chgs)) + '**')
+        st.markdown('*Mergers:* ' + '**' + str(len(df_mergers)-1) + '**')
+        st.markdown('*Started Merger/Liq:* ' + '**' + str(len(df_pending)-1) + '**')
+        st.markdown('*Liquidations:* ' + '**' + str(len(df_liquidated)-1) + '**')
+        st.markdown('---')
+    
+        df_cuna_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'cuna')
+        df_nafcu_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'nafcu')
+        df_either_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'either')
+    
+        st.markdown('**Reaffiliations**')
+        st.markdown('*Reaffiliations:* ' + '**' + str(len(df_cuna_reafl_chgs)-1) + '**')
+        st.markdown('*Members:* ' + '**' + str(format_number(df_cuna_reafl_chgs.iloc[len(df_cuna_reafl_chgs) - 1, 4])) + '**')
+        st.markdown('---')
+
+    with col[1]:
+        st.markdown('#### Details')
+        st.markdown('---')
+
+        if (selected_report_type == 'Affiliation'):
+            st.markdown('#### Affiliation Changes')
+        
+            affiliation_type = ['America\'s Credit Unions','Legacy NAFCU', 'Either / At least 1 Legacy Org']
+            selected_affiliation_type = st.selectbox('Affiliation Type', affiliation_type)
+            st.markdown('---')
+        
+            if (selected_affiliation_type == 'Legacy CUNA'):
+                df_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'cuna')
+                df_disafl_chgs = getAFLChgsTables(selected_month, 'DISAFL', 'cuna')
+            elif (selected_affiliation_type == 'Legacy NAFCU'):
+                df_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'nafcu')
+                df_disafl_chgs = getAFLChgsTables(selected_month, 'DISAFL', 'nafcu')
+            else:
+                df_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'either')
+                df_disafl_chgs = getAFLChgsTables(selected_month, 'DISAFL', 'either')
+            
+            st.markdown('#### Reaffiliations - ' + selected_affiliation_type)
+            st.dataframe(data = df_reafl_chgs, 
+                         column_config=column_configuration,
+                         use_container_width = True, 
+                         hide_index = True,
+                         )
+            st.markdown('---')
+            st.markdown('#### Disaffiliations - ' + selected_affiliation_type)
+            st.dataframe(data = df_disafl_chgs, 
+                         column_config=column_configuration,
+                         use_container_width = True, 
+                         hide_index = True,
+                         )
+            st.markdown('---')
+
+        elif (selected_report_type == 'Name'):
+            st.markdown('#### Name Changes')
+            st.dataframe(data = df_name_chgs, 
+                         column_config=column_configuration,
+                         use_container_width = True, 
+                         hide_index = True,
+                         )
+            st.markdown('---')    
+        elif (selected_report_type == 'Address'):
+            st.markdown('#### Mailing Address Changes')
+            st.dataframe(data = df_mailing_address_chgs, 
+                         column_config=column_configuration,
+                         use_container_width = True, 
+                         hide_index = True,
+                         )
+            st.markdown('---')
+            st.markdown('#### Street Address Changes')
+            st.dataframe(data = df_street_address_chgs, 
+                         column_config=column_configuration,
+                         use_container_width = True, 
+                         hide_index = True,
+                         )
+            st.markdown('---')
+        
+        elif (selected_report_type == 'Miscellaneous'):
+            st.markdown('#### Manager Changes')
+            st.dataframe(data = df_ceo_chgs, 
+                         column_config=column_configuration,
+                         use_container_width = True, 
+                         hide_index = True,
+                         )
+            st.markdown('---')
+            st.markdown('#### Charter Changes')
+            st.dataframe(data = df_charter_chgs, 
+                         column_config=column_configuration,
+                         use_container_width = True, 
+                         hide_index = True,
+                         )
+            st.markdown('---')
+        
+        elif (selected_report_type == 'New'):
+            st.markdown('#### New Credit Unions')
+            st.dataframe(data = df_new_cus, 
+                         column_config=column_configuration,
+                         use_container_width = True, 
+                         hide_index = True,
+                         )
+            st.markdown('---')
+            
+        else:
+            st.markdown('#### Merged Credit Unions')
+            st.dataframe(data = df_mergers, 
+                         column_config=column_configuration,
+                         use_container_width = True, 
+                         hide_index = True,
+                         )
+            st.markdown('---')
+            st.markdown('#### Pending Merger/Liquidation Credit Unions')
+            st.dataframe(data = df_pending, 
+                         column_config=column_configuration,
+                         use_container_width = True, 
+                         hide_index = True,
+                         )
+            st.markdown('---')
+            st.markdown('#### Liquidated Credit Unions')
+            st.dataframe(data = df_liquidated, 
+                         column_config=column_configuration,
+                         use_container_width = True, 
+                         hide_index = True,
+                         )
+            st.markdown('---')
+
+    
+
