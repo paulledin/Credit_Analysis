@@ -335,6 +335,18 @@ else:
     st.markdown("""<center>All Data As Of: </center>""", unsafe_allow_html=True)
 
     col = st.columns((2, 2, 2), gap='medium')
+    with col[0]:          
+        st.markdown('##### Assets')
+
+        st.markdown('---')
+
+    with col[1]:
+        st.markdown('##### Details')
+        st.markdown('---')
+    
+    with col[2]:
+        st.markdown('##### Other Stuff')
+        st.markdown('---')
 
 
     col = st.columns((1.5, 6.5), gap='medium')
