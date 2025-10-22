@@ -363,7 +363,7 @@ else:
         with col[0]:
             st.markdown("""<div style="text-align: left;">Assets</div>""", unsafe_allow_html=True)
             st.markdown('---')
-            st.markdown('Cash On Hand')
+            st.markdown('   Cash On Hand')
             st.markdown('Cash On Deposit')
             st.markdown('Time and Other Deposits')
             st.markdown('---')
