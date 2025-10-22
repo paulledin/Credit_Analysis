@@ -387,7 +387,6 @@ else:
         with col[8]:
             st.markdown("""<div style="text-align: right;">% Chg</div>""", unsafe_allow_html=True)
 
-    st.markdown('---')
 
 
 
