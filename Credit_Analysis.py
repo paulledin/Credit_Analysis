@@ -327,7 +327,7 @@ else:
         report_type = ['2 Year Summary','Page 2', 'Page 3&4']
         selected_report_type = st.selectbox('Report Type', report_type)
 
-    st.markdown("#### ACUs - Economics and Statistics")
+    st.markdown("<h3 style=\"text-align:center;\">H3 that is center aligned</h3>")
 
     col = st.columns((1.5, 6.5), gap='medium')
     with col[0]:          
