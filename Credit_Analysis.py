@@ -359,7 +359,7 @@ else:
     st.markdown('---')
 
     if (selected_report_type == '2 Year Summary'):
-        col = st.columns((3, 2, 2, 0.5, 0.25, 3, 2, 2, 0.5), gap='small')
+        col = st.columns((2.5, 2, 2, 1, 0.25, 2.5, 2, 2, 1), gap='small')
         with col[0]:
             st.markdown("""<div style="text-align: left;">Assets</div>""", unsafe_allow_html=True)
             st.markdown('---')
