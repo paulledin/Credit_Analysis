@@ -359,12 +359,17 @@ else:
     st.markdown('---')
 
     if (selected_report_type == '2 Year Summary'):
-        col = st.columns((2, 2, 2, 2, 1, 2, 2, 2, 2), gap='small')
+        col = st.columns((2, 2, 2, 2, 0.5, 2, 2, 2, 2), gap='small')
         with col[0]:
             st.markdown("""<div style="text-align: left;">Assets</div>""", unsafe_allow_html=True)
             st.markdown('---')
             st.markdown('Cash & Equivalents')
             st.markdown('Government Securities')
+            st.markdown('Fed Agency Securities')
+            st.markdown('Corporate CUs')
+            st.markdown('Bank Deposits')
+            st.markdown('Mutual Funds')
+            st.markdown('All Other Investments')
         
         with col[1]:
             st.markdown("""<div style="text-align: right;">YYYY-1</div>""", unsafe_allow_html=True)
