@@ -344,8 +344,7 @@ else:
         st.markdown('')
 
     with col[1]:          
-        #st.markdown("""<center>XYZ Credit Union</center>""", unsafe_allow_html=True)
-        st.markdown("""<div style="text-align: right;">This text is right-aligned</div>""", unsafe_allow_html=True)
+        st.markdown("""<center>XYZ Credit Union</center>""", unsafe_allow_html=True)
         st.markdown("""<center>12345 Credit Union Blvd</center>""", unsafe_allow_html=True)
         st.markdown("""<center>Madison, WI</center>""", unsafe_allow_html=True)
 
@@ -366,7 +365,8 @@ else:
             st.markdown('Cash & Equivalents')
         
         with col[1]:
-            st.markdown('YYYY-1')
+            #st.markdown('YYYY-1')
+            st.markdown("""<div style="text-align: right;">YYYY-1</div>""", unsafe_allow_html=True)
         
         with col[2]:
             st.markdown('YYYY-2')
