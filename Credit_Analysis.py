@@ -339,18 +339,21 @@ else:
     st.markdown("""<center>All Data As Of: </center>""", unsafe_allow_html=True)
     st.markdown('---')
 
-    col = st.columns((1, 1, 5), gap='small', vertical_alignment='center')
-    with col[0]:          
+    col = st.columns((2, 2, 2, 2), gap='small', vertical_alignment='center')
+    with col[0]:
+        st.markdown('')
+
+    with col[1]:          
         st.markdown('XYZ Credit Union')
         st.markdown('12345 Credit Union Blvd')
         st.markdown('Madison, WI')
 
-    with col[1]:
+    with col[2]:
         st.markdown('ACUs ID: 100XXXXXX')
         st.markdown('Routing #: XXXXXXXXX')
         st.markdown('Charter #: XXXXX')
     
-    with col[2]:
+    with col[3]:
         st.markdown('')
 
     st.markdown('---')
