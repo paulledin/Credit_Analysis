@@ -334,7 +334,7 @@ else:
 
     st.markdown("""<center>All Data As Of: </center>""", unsafe_allow_html=True)
 
-    col = st.columns((2, 2, 2), gap='small', vertical_alignment='center')
+    col = st.columns((2, 2), gap='small', vertical_alignment='center')
     with col[0]:          
         st.markdown('XYZ Credit Union')
         st.markdown('12345 Credit Union Blvd')
@@ -348,11 +348,6 @@ else:
         st.markdown('Charter #: XXXXX')
         st.markdown('---')
     
-    with col[2]:
-        st.markdown('##### Other Stuff')
-        st.markdown('---')
-
-
     col = st.columns((1.5, 6.5), gap='medium')
     with col[0]:          
         if (selected_report_type == '2 Year Summary'):
