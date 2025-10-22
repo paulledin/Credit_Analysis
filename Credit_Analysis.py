@@ -369,6 +369,10 @@ else:
             st.markdown('---')
             st.markdown('Total Cash and Deposits')
             st.markdown('---')
+            st.markdown('Investment Securities')
+            st.markdown('Other Investments')
+            st.markdown('---')
+            st.markdown('Total Investments')
         
         with col[1]:
             st.markdown("""<div style="text-align: right;">YYYY-1</div>""", unsafe_allow_html=True)
