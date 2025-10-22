@@ -336,7 +336,7 @@ else:
 
     col = st.columns((2, 2, 2), gap='medium')
     with col[0]:          
-        st.markdown('##### Assets')
+        st.markdown('Name')
 
         st.markdown('---')
 
