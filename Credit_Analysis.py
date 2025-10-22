@@ -347,7 +347,6 @@ else:
         st.markdown('ACUs ID: 100XXXXXX')
         st.markdown('Routing #: XXXXXXXXX')
         st.markdown('Charter #: XXXXX')
-        st.markdown('---')
     
     with col[2]:
         st.markdown('')
