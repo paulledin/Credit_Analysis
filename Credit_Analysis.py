@@ -365,14 +365,13 @@ else:
             st.markdown('Cash & Equivalents')
         
         with col[1]:
-            #st.markdown('YYYY-1')
             st.markdown("""<div style="text-align: right;">YYYY-1</div>""", unsafe_allow_html=True)
         
         with col[2]:
-            st.markdown('YYYY-2')
+            st.markdown("""<div style="text-align: right;">YYYY-2</div>""", unsafe_allow_html=True)
 
         with col[3]:
-            st.markdown('% Chg')
+            st.markdown("""<div style="text-align: right;">% Chg</div>""", unsafe_allow_html=True)
         
         with col[4]:
             st.markdown('')
@@ -381,13 +380,13 @@ else:
             st.markdown('Liabilities & Capital')
 
         with col[6]:
-            st.markdown('YYYY-1')
+            st.markdown("""<div style="text-align: right;">YYYY-1</div>""", unsafe_allow_html=True)
         
         with col[7]:
-            st.markdown('YYYY-2')
+            st.markdown("""<div style="text-align: right;">YYYY-2</div>""", unsafe_allow_html=True)
 
         with col[8]:
-            st.markdown('% Chg')
+            st.markdown("""<div style="text-align: right;">% Chg</div>""", unsafe_allow_html=True)
 
     
 
