@@ -349,6 +349,9 @@ else:
         st.markdown('Charter #: XXXXX')
         st.markdown('---')
     
+    with col[2]:
+        st.markdown('')
+    
     col = st.columns((1.5, 6.5), gap='medium')
     with col[0]:          
         if (selected_report_type == '2 Year Summary'):
