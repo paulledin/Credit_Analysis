@@ -327,6 +327,7 @@ else:
         report_type = ['2 Year Summary','Page 2', 'Page 3&4']
         selected_report_type = st.selectbox('Report Type', report_type)
 
+    st.write("ACUs - Economics and Statistics")
 
     col = st.columns((1.5, 6.5), gap='medium')
     with col[0]:          
