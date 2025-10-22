@@ -341,15 +341,17 @@ else:
         st.markdown('12345 Credit Union Blvd')
         st.markdown('Madison, WI')
 
+    st.markdown('---')
+
     with col[1]:
         st.markdown('ACUs ID: 100XXXXXX')
         st.markdown('Routing #: XXXXXXXXX')
         st.markdown('Charter #: XXXXX')
+        st.markdown('---')
     
     with col[2]:
         st.markdown('')
-    st.markdown('---')
-
+    
     col = st.columns((1.5, 6.5), gap='medium')
     with col[0]:          
         if (selected_report_type == '2 Year Summary'):
