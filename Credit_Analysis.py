@@ -335,7 +335,7 @@ else:
     st.markdown("""<center>All Data As Of: </center>""", unsafe_allow_html=True)
     st.markdown('---')
 
-    col = st.columns((2, 2), gap='small', vertical_alignment='center')
+    col = st.columns((2, 2, 2), gap='small', vertical_alignment='center')
     with col[0]:          
         st.markdown('XYZ Credit Union')
         st.markdown('12345 Credit Union Blvd')
