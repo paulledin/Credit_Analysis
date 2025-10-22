@@ -327,8 +327,9 @@ else:
         report_type = ['2 Year Summary','Page 2', 'Page 3&4']
         selected_report_type = st.selectbox('Report Type', report_type)
 
-    #st.markdown("#### ACUs - Economics and Statistics")
     st.markdown("""<center>ACUs - Economics and Statistics</center>""", unsafe_allow_html=True)
+    st.markdown("""<center>Two-Year Financial Comparison</center>""", unsafe_allow_html=True)
+    st.markdown("""<center>All Data As Of: </center>""", unsafe_allow_html=True)
 
     col = st.columns((1.5, 6.5), gap='medium')
     with col[0]:          
