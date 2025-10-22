@@ -349,9 +349,9 @@ else:
         st.markdown("""<center>Madison, WI</center>""", unsafe_allow_html=True)
 
     with col[2]:
-        st.markdown('ACUs ID: 100XXXXXX')
-        st.markdown('Routing #: XXXXXXXXX')
-        st.markdown('Charter #: XXXXX')
+        st.markdown("""<center>ACUs ID: 100XXXXXX</center>""", unsafe_allow_html=True)
+        st.markdown("""<center>Routing #: XXXXXXXXX</center>""", unsafe_allow_html=True)
+        st.markdown("""<center>Charter #: XXXXX</center>""", unsafe_allow_html=True)
     
     with col[3]:
         st.markdown('')
