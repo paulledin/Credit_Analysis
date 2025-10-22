@@ -364,6 +364,7 @@ else:
             st.markdown("""<div style="text-align: right;">Assets</div>""", unsafe_allow_html=True)
             st.markdown('---')
             st.markdown('Cash & Equivalents')
+            st.markdown('Government Securities')
         
         with col[1]:
             st.markdown("""<div style="text-align: right;">YYYY-1</div>""", unsafe_allow_html=True)
