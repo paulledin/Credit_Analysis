@@ -370,6 +370,9 @@ else:
             st.markdown('Bank Deposits')
             st.markdown('Mutual Funds')
             st.markdown('All Other Investments')
+            st.markdown('---')
+            st.markdown('Total Invs excl Cash&Equivs')
+            st.markdown('---')
         
         with col[1]:
             st.markdown("""<div style="text-align: right;">YYYY-1</div>""", unsafe_allow_html=True)
