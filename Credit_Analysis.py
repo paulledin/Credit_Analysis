@@ -341,7 +341,7 @@ else:
         st.markdown('12345 Credit Union Blvd')
         st.markdown('Madison, WI')
 
-        st.markdown('---')
+    st.markdown('---')
 
     with col[1]:
         st.markdown('ACUs ID: 100XXXXXX')
