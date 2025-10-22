@@ -330,11 +330,11 @@ else:
     st.markdown("""##### <center>America's Credit Unions - Economics and Statistics</center>""", unsafe_allow_html=True)
 
     if (selected_report_type == '2 Year Summary'):
-        st.markdown("""<center>Two-Year Financial Comparison</center>""", unsafe_allow_html=True)
+        st.markdown("""<center>##### Two-Year Financial Comparison</center>""", unsafe_allow_html=True)
     elif (selected_report_type == 'Page 2'):
-        st.markdown("""<center>Credit Analysis - Page 2</center>""", unsafe_allow_html=True)
+        st.markdown("""<center>##### Credit Analysis - Page 2</center>""", unsafe_allow_html=True)
     elif (selected_report_type == 'Page 3&4'):
-        st.markdown("""<center>Credit Analysis - Page 3&4</center>""", unsafe_allow_html=True)
+        st.markdown("""<center>##### Credit Analysis - Page 3&4</center>""", unsafe_allow_html=True)
 
     st.markdown("""<center>All Data As Of: </center>""", unsafe_allow_html=True)
     st.markdown('---')
