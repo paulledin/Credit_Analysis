@@ -344,7 +344,7 @@ else:
         st.markdown('')
 
     with col[1]:          
-        st.markdown("""<center><bold>XYZ Credit Union</bold></center>""", unsafe_allow_html=True)
+        st.markdown("""<center>XYZ Credit Union</center>""", unsafe_allow_html=True)
         st.markdown("""<center>12345 Credit Union Blvd</center>""", unsafe_allow_html=True)
         st.markdown("""<center>Madison, WI</center>""", unsafe_allow_html=True)
 
