@@ -326,25 +326,7 @@ else:
     
         report_type = ['Status','Affiliation', 'Name', 'Address', 'Miscellaneous', 'New']
         selected_report_type = st.selectbox('Report Type', report_type)
-    
-        month = report_periods['report_periods_formatted']
-        selected_month = st.selectbox('Month', month)
 
-    df_afl_table_cuna = getAFLTable(selected_month, 'cuna')
-    df_afl_table_nafcu = getAFLTable(selected_month, 'nafcu')
-    df_afl_table_either = getAFLTable(selected_month, 'either')
-    
-
-
-    df_mergers = getMergersTable(selected_month)
-    df_pending = getPendingTable(selected_month)
-    df_liquidated = getLiquidationsTable(selected_month)
-    df_name_chgs = getNameChgsTable(selected_month)
-    df_mailing_address_chgs = getAddressChgsTable(selected_month, 'mailing')
-    df_street_address_chgs = getAddressChgsTable(selected_month, 'street')
-    df_ceo_chgs = getCEOChgsTable(selected_month)
-    df_charter_chgs = getCharterChgsTable(selected_month)
-    df_new_cus = getNewCUsTable(selected_month)
 
     col = st.columns((1.5, 6.5), gap='medium')
     with col[0]:          
