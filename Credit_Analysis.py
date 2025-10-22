@@ -333,6 +333,7 @@ else:
         st.markdown("""<center>Two-Year Financial Comparison</center>""", unsafe_allow_html=True)
 
     st.markdown("""<center>All Data As Of: </center>""", unsafe_allow_html=True)
+    st.markdown('---')
 
     col = st.columns((2, 2), gap='small', vertical_alignment='center')
     with col[0]:          
