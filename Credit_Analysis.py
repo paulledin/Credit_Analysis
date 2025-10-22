@@ -350,33 +350,6 @@ else:
     with col[0]:          
         st.markdown('### Summary')
         st.markdown('---')
-        st.markdown('**Month Ended :: ' + selected_month + '**')
-        st.markdown('*Active Credit Unions:* ' + '**' + str(format_number(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 5])) + '**')
-        st.markdown('*Affiliated with America\'s CUs:* ' + '**' + str(format_number(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 1])) + '**')
-        st.markdown('---')
-    
-        st.markdown('**Affiliation Ratios**')
-        st.markdown('*Credit Unions:* ' + '**' + str(round(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 10] * 100, 2))  + '%**')
-        st.markdown('*Members:* ' + '**' + str(round(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 11] * 100, 2))  + '%**')
-        st.markdown('*Assets:* ' + '**' + str(round(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 12] * 100, 2))  + '%**')
-        st.markdown('---')
-    
-        st.markdown('**Monthly Totals**')
-        st.markdown('*New Credit Unions:* ' + '**' + str(len(df_new_cus)) + '**')
-        st.markdown('*Name Changes:* ' + '**' + str(len(df_name_chgs)) + '**')
-        st.markdown('*Mergers:* ' + '**' + str(len(df_mergers)-1) + '**')
-        st.markdown('*Started Merger/Liq:* ' + '**' + str(len(df_pending)-1) + '**')
-        st.markdown('*Liquidations:* ' + '**' + str(len(df_liquidated)-1) + '**')
-        st.markdown('---')
-    
-        df_cuna_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'cuna')
-        df_nafcu_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'nafcu')
-        df_either_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'either')
-    
-        st.markdown('**Reaffiliations**')
-        st.markdown('*Reaffiliations:* ' + '**' + str(len(df_cuna_reafl_chgs)-1) + '**')
-        st.markdown('*Members:* ' + '**' + str(format_number(df_cuna_reafl_chgs.iloc[len(df_cuna_reafl_chgs) - 1, 4])) + '**')
-        st.markdown('---')
 
     with col[1]:
         st.markdown('#### Details')
