@@ -363,7 +363,7 @@ else:
         with col[0]:
             st.markdown("""<div style="text-align: left;">Assets</div>""", unsafe_allow_html=True)
             st.markdown('---')
-            st.markdown('   Cash On Hand')
+            st.markdown('Cash On Hand')
             st.markdown('Cash On Deposit')
             st.markdown('Time and Other Deposits')
             st.markdown('---')
@@ -373,6 +373,9 @@ else:
             st.markdown('Other Investments')
             st.markdown('---')
             st.markdown('Total Investments')
+            st.markdown('---')
+            st.markdown('Total Cash, Deps, & Invs')
+            st.markdown('---')
         
         with col[1]:
             st.markdown("""<div style="text-align: right;">YYYY-1</div>""", unsafe_allow_html=True)
