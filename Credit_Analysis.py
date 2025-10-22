@@ -361,7 +361,7 @@ else:
     if (selected_report_type == '2 Year Summary'):
         col = st.columns((2, 2, 2, 2, 1, 2, 2, 2, 2), gap='small')
         with col[0]:
-            st.markdown("""<div style="text-align: right;">Assets</div>""", unsafe_allow_html=True)
+            st.markdown("""<div style="text-align: left;">Assets</div>""", unsafe_allow_html=True)
             st.markdown('---')
             st.markdown('Cash & Equivalents')
             st.markdown('Government Securities')
