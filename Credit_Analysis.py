@@ -396,6 +396,8 @@ else:
             st.markdown('Other Notes Payable')
             st.markdown('All Other Liabilities')
             st.markdown('---')
+            st.markdown('Total Liabilities')
+            st.markdown('---')
 
         with col[6]:
             st.markdown("""<div style="text-align: right;">YYYY-1</div>""", unsafe_allow_html=True)
