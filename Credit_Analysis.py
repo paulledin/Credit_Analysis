@@ -336,7 +336,7 @@ else:
         st.markdown('---')
 
     with col[1]:
-        st.markdown('### Details')
+        st.markdown('##### Details')
         st.markdown('---')
 
 
