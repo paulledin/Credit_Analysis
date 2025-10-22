@@ -360,11 +360,9 @@ else:
         if (selected_report_type == '2 Year Summary'):
             st.markdown('##### Assets')
 
-        st.markdown('---')
 
     with col[1]:
         st.markdown('##### Details')
-        st.markdown('---')
 
 
 
