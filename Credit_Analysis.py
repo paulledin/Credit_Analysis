@@ -369,7 +369,7 @@ else:
         with col[2]:
             st.markdown('##### YYYY-2')
 
-        with col[1]:
+        with col[3]:
             st.markdown('##### % Chg')
 
 
