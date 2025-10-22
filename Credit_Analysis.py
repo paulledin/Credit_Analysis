@@ -359,7 +359,7 @@ else:
     st.markdown('---')
 
     if (selected_report_type == '2 Year Summary'):
-        col = st.columns((2, 2, 2, 2), gap='small')
+        col = st.columns((2, 2, 2, 2, 2, 2, 2, 2, 2), gap='small')
         with col[0]:
             st.markdown('Assets')
         
@@ -371,7 +371,21 @@ else:
 
         with col[3]:
             st.markdown('% Chg')
+        
+        with col[4]:
+            st.markdown('')
+        
+        with col[5]:
+            st.markdown('Liabilities & Capital')
 
+        with col[6]:
+            st.markdown('YYYY-1')
+        
+        with col[7]:
+            st.markdown('YYYY-2')
+
+        with col[8]:
+            st.markdown('% Chg')
 
     
 
