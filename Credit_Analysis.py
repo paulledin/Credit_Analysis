@@ -336,7 +336,9 @@ else:
 
     col = st.columns((2, 2, 2), gap='medium')
     with col[0]:          
-        st.markdown('Name')
+        st.markdown('XYZ Credit Union')
+        st.markdown('12345 Credit Union Blvd')
+        st.markdown('Madison, WI 53716')
 
         st.markdown('---')
 
