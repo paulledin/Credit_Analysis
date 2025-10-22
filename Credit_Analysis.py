@@ -382,7 +382,7 @@ else:
             st.markdown('')
         
         with col[5]:
-            st.markdown("""<div style="text-align: right;">Liabilities & Capital</div>""", unsafe_allow_html=True)
+            st.markdown("""<div style="text-align: left;">Liabilities & Capital</div>""", unsafe_allow_html=True)
             st.markdown('---')
 
         with col[6]:
