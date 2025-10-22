@@ -330,23 +330,11 @@ else:
         month = report_periods['report_periods_formatted']
         selected_month = st.selectbox('Month', month)
 
-    #df_afl_table_cuna = getAFLTable_from_db(selected_month, 'cuna')
-    #df_afl_table_nafcu = getAFLTable_from_db(selected_month, 'nafcu')
-    #df_afl_table_either = getAFLTable_from_db(selected_month, 'either')
     df_afl_table_cuna = getAFLTable(selected_month, 'cuna')
     df_afl_table_nafcu = getAFLTable(selected_month, 'nafcu')
     df_afl_table_either = getAFLTable(selected_month, 'either')
     
 
-    #df_mergers = getChangeTableFromDB(selected_month, 'mergers')
-    #df_pending = getChangeTableFromDB(selected_month, 'pending')
-    #df_liquidated = getChangeTableFromDB(selected_month, 'liquidations')
-    #df_name_chgs = getChangeTableFromDB(selected_month, 'name_chgs')
-    #df_mailing_address_chgs = getChangeTableFromDB(selected_month, 'mailing_address_chgs')
-    #df_street_address_chgs = getChangeTableFromDB(selected_month, 'street_address_chgs')
-    #df_ceo_chgs = getChangeTableFromDB(selected_month, 'ceo_chgs')
-    #df_charter_chgs = getChangeTableFromDB(selected_month, 'charter_chgs')
-    #df_new_cus = getChangeTableFromDB(selected_month, 'new_cus')
 
     df_mergers = getMergersTable(selected_month)
     df_pending = getPendingTable(selected_month)
