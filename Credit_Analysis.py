@@ -358,14 +358,13 @@ else:
 
     st.markdown('---')
 
-    col = st.columns((1.5, 6.5), gap='medium')
-    with col[0]:          
-        if (selected_report_type == '2 Year Summary'):
+    if (selected_report_type == '2 Year Summary'):
+        col = st.columns((1.5, 6.5), gap='medium')
+        with col[0]:
             st.markdown('##### Assets')
-
-
-    with col[1]:
-        st.markdown('##### Details')
+        
+        with col[1]:
+            st.markdown('##### Details')
 
 
 
