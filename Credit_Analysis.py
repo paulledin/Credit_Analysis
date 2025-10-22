@@ -296,33 +296,9 @@ if (passphrase != thePassPhrase):
     if len(passphrase) > 0:
         st.markdown('# Passphrase not correct....')
         st.markdown('### Please try again or contact: pledin@americascreditunions.org for assistance.')
-else:  
-    column_configuration = {
-        "Assets": st.column_config.NumberColumn(
-        "Assets ($)",
-        help="Total Assets",
-        min_value=0,
-        max_value=1000000000000,
-        step=1,
-        format="localized",),
-        "Members": st.column_config.NumberColumn(
-        "Members",
-        help="Number of Memberships",
-        min_value=0,
-        max_value=1000000000000,
-        step=1,
-        format="localized",),
-        "Employees": st.column_config.NumberColumn(
-        "Employees",
-        help="Number of Total Employees",
-        min_value=0,
-        max_value=1000000000000,
-        step=1,
-        format="localized",)
-        }
      
     with st.sidebar:
-        st.title('Monthly Change Reports')
+        st.title('Credit Analysis Reports')
     
         report_type = ['Status','Affiliation', 'Name', 'Address', 'Miscellaneous', 'New']
         selected_report_type = st.selectbox('Report Type', report_type)
