@@ -415,6 +415,15 @@ else:
             st.markdown('---')
             st.markdown('Total Liabilities')
             st.markdown('---')
+            st.markdown('Total Assets')
+            st.markdown('Reg Shares & Deps')
+            st.markdown('Share Drafts')
+            st.markdown('Money Market Accounts')
+            st.markdown('IRA/Keogh')
+            st.markdown('Share Certificates')
+            st.markdown('---')
+            st.markdown('Total Shares and Deps')
+            st.markdown('---')
 
         with col[6]:
             st.markdown("""<div style="text-align: right;">YYYY-1</div>""", unsafe_allow_html=True)
