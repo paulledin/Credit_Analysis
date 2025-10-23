@@ -383,6 +383,13 @@ else:
             st.markdown('---')
             st.markdown('Total Loans')
             st.markdown('---')
+            st.markdown('(Loan Loss Allowance)')
+            st.markdown('Land and Building')
+            st.markdown('Other Fixed Assets')
+            st.markdown('All Other Assets')
+            st.markdown('---')
+            st.markdown('Total Assets')
+            st.markdown('---')
         
         with col[1]:
             st.markdown("""<div style="text-align: right;">YYYY-1</div>""", unsafe_allow_html=True)
