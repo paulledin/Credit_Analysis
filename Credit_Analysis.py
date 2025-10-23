@@ -376,6 +376,10 @@ else:
             st.markdown('---')
             st.markdown('Total Cash, Deps, & Invs')
             st.markdown('---')
+            st.markdown('Unsecured Loans')
+            st.markdown('Auto Loans')
+            st.markdown('Mortgage Loans')
+            st.markdown('All Other Loans')
         
         with col[1]:
             st.markdown("""<div style="text-align: right;">YYYY-1</div>""", unsafe_allow_html=True)
