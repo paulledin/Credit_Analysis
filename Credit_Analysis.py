@@ -424,6 +424,14 @@ else:
             st.markdown('---')
             st.markdown('Total Shares and Deps')
             st.markdown('---')
+            st.markdown('Regular Reserves')
+            st.markdown('Other Reserves')
+            st.markdown('Undivided Earnings')
+            st.markdown('---')
+            st.markdown('Total Capital')
+            st.markdown('---')
+            st.markdown('Total Liabs & Capital')
+            st.markdown('---')
 
         with col[6]:
             st.markdown("""<div style="text-align: right;">YYYY-1</div>""", unsafe_allow_html=True)
