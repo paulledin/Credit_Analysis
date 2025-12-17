@@ -59,6 +59,9 @@ def convertDateToSystem(date):
     
     return date[len(date)-4:len(date)] + switcher.get(date[:len(date)-5], "**Bad Month**")
 
+
+
+
 def get_report_periods():
     periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')
     
