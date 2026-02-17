@@ -71,6 +71,8 @@ def get_report_periods():
         retVal.insert(index, periods[x])
         index += 1
     
+
+    
     return (retVal)
 
 def getMergersTable(month):
